@@ -81,14 +81,33 @@ def main():
                 strand_order.append(s)
             strand_n[s] += 1
 
-        graph = {"id": gid, "meta": meta, "concepts": concepts, "mcqs": mcqs, "drills": drills}
+        # per-concept drill counts (so the UI can show/enable drills without loading them)
+        drill_counts = {}
+        for d in drills:
+            cid = d.get("concept_id")
+            if cid:
+                drill_counts[cid] = drill_counts.get(cid, 0) + 1
+
+        # main file: concepts + mcqs (+ drill counts) — powers browse/quiz/mock/dashboard
+        graph = {"id": gid, "meta": meta, "concepts": concepts, "mcqs": mcqs, "drillCounts": drill_counts}
         out = os.path.abspath(os.path.join(OUTDIR, f"graph-{gid}.js"))
         with open(out, "w") as f:
-            f.write(f"/* Snapshot of abhyas {subject}/{band} (read-only source). Generated — do not hand-edit. */\n")
+            f.write(f"/* Snapshot of abhyas {subject}/{band} — concepts + MCQs (read-only source). Generated — do not hand-edit. */\n")
             f.write("(window.ABHYAS_GRAPHS=window.ABHYAS_GRAPHS||{})[" + json.dumps(gid) + "]=")
             json.dump(graph, f, ensure_ascii=False, separators=(",", ":"))
             f.write(";\n")
         sz = os.path.getsize(out) / 1e6
+
+        # drills file: emitted only when the graph has drills — lazy-loaded on first drill
+        dsz = 0.0
+        if drills:
+            dout = os.path.abspath(os.path.join(OUTDIR, f"graph-{gid}-drills.js"))
+            with open(dout, "w") as f:
+                f.write(f"/* Snapshot of abhyas {subject}/{band} — drills (read-only source). Generated — do not hand-edit. */\n")
+                f.write("(window.ABHYAS_DRILLS=window.ABHYAS_DRILLS||{})[" + json.dumps(gid) + "]=")
+                json.dump({"id": gid, "drills": drills}, f, ensure_ascii=False, separators=(",", ":"))
+                f.write(";\n")
+            dsz = os.path.getsize(dout) / 1e6
 
         catalog.append({
             "id": gid, "subject": subj_name, "subjectShort": short,
@@ -97,9 +116,10 @@ def main():
             "conceptCount": len(concepts), "mcqCount": len(mcqs), "drillCount": len(drills),
             "strands": [{"name": s, "n": strand_n[s]} for s in strand_order],
             "file": f"data/graph-{gid}.js",
+            "drillsFile": (f"data/graph-{gid}-drills.js" if drills else None),
         })
         total_mcq += len(mcqs); total_drill += len(drills); total_concept += len(concepts)
-        print(f"  {gid:24} {len(concepts):4} concepts · {len(mcqs):5} mcqs · {len(drills):6} drills · {sz:.2f} MB")
+        print(f"  {gid:24} {len(concepts):4} concepts · {len(mcqs):5} mcqs · {len(drills):6} drills · main {sz:.2f} MB{f' + drills {dsz:.2f} MB' if drills else ''}")
 
     cat = {"version": 1, "graphs": catalog,
            "totals": {"graphs": len(catalog), "concepts": total_concept, "mcqs": total_mcq, "drills": total_drill}}
