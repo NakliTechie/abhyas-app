@@ -1,47 +1,115 @@
 #!/usr/bin/env python3
-"""Build data/maths-k5.js from the abhyas content engine (read-only source).
+"""Build the multi-subject Abhyas data bundle from the abhyas content engine (read-only).
 
-Wraps the assembled dataset + the concept knowledge graph into a single
-window global so the app works both served and from file://.
+Emits:
+  data/catalog.js         -> window.ABHYAS_CATALOG   (small: one summary row per graph)
+  data/graph-<id>.js      -> window.ABHYAS_GRAPHS['<id>'] = {meta, concepts, mcqs, drills}
+
+Each graph is a separate file so the app lazy-loads only the subject the student opens
+(time-to-first-value stays fast; the catalog alone is a few KB). Concept id is the join key.
+
 Run from the abhyas-app repo root:  python3 tools/build-data.py
+Source root override:  ABHYAS_SRC=/path/to/abhyas/content
 """
 import json, os, sys
 
-SRC = os.environ.get("ABHYAS_SRC", os.path.expanduser("~/Code/abhyas/content/maths/k5"))
-OUT = os.path.join(os.path.dirname(__file__), "..", "data", "maths-k5.js")
+SRC = os.environ.get("ABHYAS_SRC", os.path.expanduser("~/Code/abhyas/content"))
+OUTDIR = os.path.join(os.path.dirname(__file__), "..", "data")
+
+SUBJECT_SHORT = {"Mathematics": "Maths", "Environmental Studies": "EVS"}
+# band dir -> (order, label)
+BANDS = {"k5": (0, "Class 1–5"), "6-10": (1, "Class 6–10"), "11-testprep": (2, "Class 11–12 · JEE/NEET")}
+SUBJECT_ORDER = ["maths", "physics", "chemistry", "biology", "evs",
+                 "english", "history", "geography", "civics", "economics"]
+
+
+def band_key(band):
+    return BANDS.get(band, (9, band))[0]
+
+
+def discover():
+    graphs = []
+    for subject in sorted(os.listdir(SRC)):
+        sdir = os.path.join(SRC, subject)
+        if not os.path.isdir(sdir):
+            continue
+        for band in sorted(os.listdir(sdir)):
+            bdir = os.path.join(sdir, band)
+            cj = os.path.join(bdir, "concepts.json")
+            ds = os.path.join(bdir, "dataset.json")
+            if os.path.exists(cj) and os.path.exists(ds):
+                graphs.append((subject, band, cj, ds))
+    # order: subject (by SUBJECT_ORDER), then band
+    def okey(g):
+        subj, band = g[0], g[1]
+        si = SUBJECT_ORDER.index(subj) if subj in SUBJECT_ORDER else 99
+        return (band_key(band), si, subj)
+    return sorted(graphs, key=okey)
 
 
 def main():
-    ds_path = os.path.join(SRC, "dataset.json")
-    cj_path = os.path.join(SRC, "concepts.json")
-    if not (os.path.exists(ds_path) and os.path.exists(cj_path)):
-        sys.exit(f"abhyas source not found under {SRC} (set ABHYAS_SRC)")
+    if not os.path.isdir(SRC):
+        sys.exit(f"abhyas content not found under {SRC} (set ABHYAS_SRC)")
+    os.makedirs(os.path.abspath(OUTDIR), exist_ok=True)
 
-    with open(ds_path) as f:
-        ds = json.load(f)
-    with open(cj_path) as f:
-        cj = json.load(f)
+    found = discover()
+    if not found:
+        sys.exit(f"no <subject>/<band>/(concepts.json+dataset.json) pairs under {SRC}")
 
-    bundle = {
-        "meta": ds["meta"],
-        "counts": ds["counts"],
-        "concepts": cj["concepts"],
-        "concepts_meta": cj["meta"],
-        "mcqs": ds["mcqs"],
-        "drills": ds["drills"],
-        "snapshot_source": "NakliTechie/abhyas content/maths/k5 (read-only)",
-    }
+    catalog = []
+    total_mcq = total_drill = total_concept = 0
+    for subject, band, cj_path, ds_path in found:
+        with open(cj_path) as f:
+            cj = json.load(f)
+        with open(ds_path) as f:
+            ds = json.load(f)
+        gid = f"{subject}-{band}"
+        concepts = cj["concepts"]
+        mcqs = ds.get("mcqs", [])
+        drills = ds.get("drills", [])
+        meta = dict(ds.get("meta", {}))
+        subj_name = meta.get("subject") or subject.title()
+        short = SUBJECT_SHORT.get(subj_name, subj_name)
+        grades = meta.get("grades") or sorted({c.get("grade") for c in concepts if c.get("grade") is not None})
 
-    out = os.path.abspath(OUT)
-    os.makedirs(os.path.dirname(out), exist_ok=True)
-    with open(out, "w") as f:
-        f.write("/* Snapshot of abhyas K5 Mathematics content. Generated — do not hand-edit. */\n")
-        f.write("window.ABHYAS_DATA = ")
-        json.dump(bundle, f, ensure_ascii=False, separators=(",", ":"))
+        # strand summary (ordered as concepts appear)
+        strand_order, strand_n = [], {}
+        for c in concepts:
+            s = c.get("strand") or "—"
+            if s not in strand_n:
+                strand_n[s] = 0
+                strand_order.append(s)
+            strand_n[s] += 1
+
+        graph = {"id": gid, "meta": meta, "concepts": concepts, "mcqs": mcqs, "drills": drills}
+        out = os.path.abspath(os.path.join(OUTDIR, f"graph-{gid}.js"))
+        with open(out, "w") as f:
+            f.write(f"/* Snapshot of abhyas {subject}/{band} (read-only source). Generated — do not hand-edit. */\n")
+            f.write("(window.ABHYAS_GRAPHS=window.ABHYAS_GRAPHS||{})[" + json.dumps(gid) + "]=")
+            json.dump(graph, f, ensure_ascii=False, separators=(",", ":"))
+            f.write(";\n")
+        sz = os.path.getsize(out) / 1e6
+
+        catalog.append({
+            "id": gid, "subject": subj_name, "subjectShort": short,
+            "band": band, "bandLabel": BANDS.get(band, (9, band))[1],
+            "grades": grades,
+            "conceptCount": len(concepts), "mcqCount": len(mcqs), "drillCount": len(drills),
+            "strands": [{"name": s, "n": strand_n[s]} for s in strand_order],
+            "file": f"data/graph-{gid}.js",
+        })
+        total_mcq += len(mcqs); total_drill += len(drills); total_concept += len(concepts)
+        print(f"  {gid:24} {len(concepts):4} concepts · {len(mcqs):5} mcqs · {len(drills):6} drills · {sz:.2f} MB")
+
+    cat = {"version": 1, "graphs": catalog,
+           "totals": {"graphs": len(catalog), "concepts": total_concept, "mcqs": total_mcq, "drills": total_drill}}
+    cout = os.path.abspath(os.path.join(OUTDIR, "catalog.js"))
+    with open(cout, "w") as f:
+        f.write("/* Abhyas catalog — one summary row per graph. Generated — do not hand-edit. */\n")
+        f.write("window.ABHYAS_CATALOG = ")
+        json.dump(cat, f, ensure_ascii=False, separators=(",", ":"))
         f.write(";\n")
-
-    print(f"wrote {out} ({os.path.getsize(out)/1e6:.2f} MB)")
-    print(f"concepts: {len(bundle['concepts'])}  mcqs: {len(bundle['mcqs'])}  drills: {len(bundle['drills'])}")
+    print(f"\ncatalog.js: {len(catalog)} graphs · {total_concept} concepts · {total_mcq} mcqs · {total_drill} drills ({os.path.getsize(cout)/1e3:.1f} KB)")
 
 
 if __name__ == "__main__":

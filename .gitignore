@@ -3,3 +3,5 @@ plan/
 node_modules/
 .wrangler/
 *.log
+
+.claude/
