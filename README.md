@@ -1,11 +1,22 @@
 # Abhyas — student-facing maths practice
 
-A calm, self-paced practice front-end for the **abhyas** curriculum-content engine, styled as a fork of [naklios.dev](https://naklios.dev). Class 1–5 (K5) Mathematics.
+A calm, self-paced practice app for the **abhyas** curriculum-content engine, built for the [naklios.dev](https://naklios.dev) family. Class 1–5 (K5) Mathematics. Runs standalone in any browser, or as a hosted app inside a naklios desktop (e.g. the [naklios-kids](../naklios-kids) desktop).
 
 - **Browse** by strand → concept, respecting grade banding (Class 1–5).
-- **Practice drills** — endless procedural stream per concept, exact machine-checkable answers, instant feedback.
+- **Practice drills** — endless procedural stream per concept, exact machine-checkable answers, instant feedback across all 9 answer types.
 - **Take a quiz** — multiple-choice sets; every wrong answer surfaces the *named misconception* (the diagnostic value from abhyas), not just right/wrong.
-- **Progress** — per-concept mastery, stored only in the viewer's browser. No account, no server, no telemetry.
+- **Mock test** — build a blueprint over classes / topics / difficulty / length, answer test-style, then get a scored report: per-topic breakdown + which misconceptions were hit.
+- **Progress** — per-concept mastery dashboard (per-topic bars, keep-practising list, common misconceptions), stored only on the viewer's device. No account, no server, no telemetry.
+
+## Runs under naklios
+
+The app vendors the naklios cooperative SDK ([`sdk/naklios.js`](sdk/naklios.js)) and is a well-behaved guest:
+
+- **Theme** — maps the host's theme tokens onto its own CSS variables (`naklios.theme.onChange`).
+- **Storage adapter** — writes progress to `naklios.fs` (`progress.json`) when the host offers storage; falls back to `localStorage` standalone. Detect → attempt → fall back, always safe.
+- **Lifecycle** — `ready()`, dynamic `title()`, host-aware "Options" (Close app), capability-aware storage copy.
+
+The SDK is a no-op standalone, so the same file works in a plain tab and inside a naklios window. Refresh the vendored copy from `NakliTechie/nakliOS → sdk/naklios.js`.
 
 ## How it's built
 
@@ -33,6 +44,6 @@ python3 tools/build-data.py
 
 ## Status
 
-First working loop shipped: **browse → practice a drill → answer an MCQ**, with per-concept progress. Next layers: mock tests (blueprint over strand/grade/difficulty) and a mastery dashboard.
+Shipped: **browse → drill → quiz → mock test → progress dashboard**, per-concept mastery, and naklios host integration (theme, storage adapter, lifecycle). Next layers: chapter reading + video, AI Q&A (host `naklios.ai`), more bands/subjects as abhyas emits them.
 
-Content © the abhyas engine · app styled for the naklios.dev house shell.
+Content © the abhyas engine · app for the naklios.dev family.

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Abhyas — Maths Practice</title>
-<meta name="description" content="Self-paced maths practice for Class 1–5. Browse concepts, drill the skills, and learn from your mistakes. Private by default — nothing leaves your device.">
+<meta name="description" content="Self-paced maths practice for Class 1–5. Browse concepts, drill the skills, take mock tests, and learn from your mistakes. Private by default — nothing leaves your device.">
 <meta name="author" content="Chirag Patnaik">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23c8512a'/%3E%3Ctext x='32' y='45' font-family='-apple-system,system-ui,sans-serif' font-size='34' font-weight='700' fill='%23fbf4e6' text-anchor='middle'%3Ea%3C/text%3E%3C/svg%3E">
@@ -69,6 +69,12 @@ header.top{
   display:flex;align-items:center;justify-content:center;color:var(--muted);
 }
 .icon-btn:hover{color:var(--ink);border-color:var(--line-strong);}
+
+/* tabs */
+.tabs{display:flex;gap:5px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px;margin:0 0 20px;width:fit-content;box-shadow:var(--shadow);max-width:100%;overflow:auto;}
+.tab{padding:8px 18px;border-radius:999px;font-weight:650;font-size:14px;color:var(--muted);white-space:nowrap;}
+.tab.on{background:var(--brand);color:#fff;box-shadow:var(--shadow);}
+.tab:hover:not(.on){color:var(--ink);}
 
 /* grade bar */
 .gradebar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;}
@@ -204,6 +210,8 @@ header.top{
   width:30px;height:30px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;
   background:var(--card);border:1.5px solid var(--line-strong);font-weight:800;font-size:15px;color:var(--muted);
 }
+.opt.sel{border-color:var(--act);background:color-mix(in srgb,var(--act) 12%,var(--panel));}
+.opt.sel .key{background:var(--act);border-color:var(--act);color:#fff;}
 .opt.correct{border-color:var(--ok);background:var(--ok-soft);color:var(--ok-ink);}
 .opt.correct .key{background:var(--ok);border-color:var(--ok);color:#fff;}
 .opt.wrong{border-color:var(--bad);background:var(--bad-soft);color:var(--bad-ink);}
@@ -221,6 +229,45 @@ header.top{
 .miss .row b{color:var(--ink);font-weight:700;}
 .miss .mc{margin-top:8px;background:var(--bad-soft);color:var(--bad-ink);border-radius:9px;padding:9px 12px;font-size:13.5px;font-weight:600;}
 .result-actions{display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap;}
+.summary-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));margin-top:20px;text-align:left;}
+.summary-grid .box{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px 14px;}
+.summary-grid .box .n{font-size:22px;font-weight:800;}
+.summary-grid .box .l{color:var(--muted);font-size:12.5px;margin-top:2px;}
+
+/* mock setup form */
+.form-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;max-width:640px;}
+.field{margin-bottom:22px;}
+.field:last-child{margin-bottom:0;}
+.field > label{display:block;font-weight:700;font-size:14.5px;margin-bottom:10px;}
+.field .hint{color:var(--muted);font-weight:500;font-size:12.5px;margin-left:8px;}
+.checks{display:flex;gap:8px;flex-wrap:wrap;}
+.check{padding:8px 15px;border-radius:999px;border:1.5px solid var(--line-strong);background:var(--panel);font-weight:650;font-size:14px;color:var(--muted);}
+.check:hover{border-color:var(--act);color:var(--ink);}
+.check.on{background:var(--act);border-color:var(--act);color:#fff;}
+.avail{margin:18px 0 4px;color:var(--muted);font-size:14px;font-weight:600;}
+.avail b{color:var(--ink);}
+
+/* dashboard */
+.stat-grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px;}
+.stat .n{font-size:30px;font-weight:850;letter-spacing:-.01em;}
+.stat .l{color:var(--muted);font-size:13px;margin-top:2px;}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:8px 18px;}
+.mrow{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);}
+.mrow:last-child{border-bottom:0;}
+.mrow .name{flex:1;font-weight:600;min-width:0;}
+.mrow .name small{display:block;color:var(--muted);font-weight:500;font-size:12.5px;}
+.mbar{width:120px;height:8px;border-radius:999px;background:var(--line);overflow:hidden;flex:none;}
+.mbar>i{display:block;height:100%;border-radius:999px;}
+.mrow .pct{width:38px;text-align:right;font-weight:700;font-size:13px;color:var(--muted);}
+.review-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);}
+.review-row:last-child{border-bottom:0;}
+.review-row .name{flex:1;font-weight:600;}
+.review-row .name small{display:block;color:var(--muted);font-weight:500;font-size:12.5px;}
+.mc-agg{background:var(--bad-soft);color:var(--bad-ink);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:10px;}
+.mc-agg .txt{font-weight:650;font-size:14px;}
+.mc-agg .meta{font-size:12.5px;margin-top:4px;opacity:.9;}
+.mc-agg .meta a{color:inherit;text-decoration:underline;}
 
 /* empty */
 .empty{text-align:center;color:var(--muted);padding:50px 20px;}
@@ -239,10 +286,11 @@ header.top{
 .modal{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-lg);max-width:420px;width:100%;padding:24px;}
 .modal h3{font-size:19px;}
 .modal p{color:var(--muted);margin:10px 0 20px;}
-.modal .row{display:flex;gap:10px;justify-content:flex-end;}
+.modal .row{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;}
 
 footer{max-width:var(--maxw);margin:40px auto 0;padding:20px;color:var(--faint);font-size:12.5px;text-align:center;border-top:1px solid var(--line);}
 kbd{background:var(--panel);border:1px solid var(--line-strong);border-bottom-width:2px;border-radius:6px;padding:1px 6px;font-size:12px;font-family:inherit;color:var(--muted);}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;}}
 </style>
 </head>
 <body>
@@ -256,7 +304,7 @@ kbd{background:var(--panel);border:1px solid var(--line-strong);border-bottom-wi
       </div>
     </div>
     <div class="top-spacer"></div>
-    <span class="priv-pill" title="Your progress is stored only on this device."><span class="priv-dot"></span> Private · on this device</span>
+    <span class="priv-pill" id="privPill" title="Your progress is stored only on this device."><span class="priv-dot"></span> Private · on this device</span>
     <button class="icon-btn" id="menuBtn" title="Options" aria-label="Options">⋯</button>
   </div>
 </header>
@@ -264,13 +312,15 @@ kbd{background:var(--panel);border:1px solid var(--line-strong);border-bottom-wi
 <main id="app"></main>
 
 <footer>
-  Abhyas — self-paced maths practice, styled for <a href="https://naklios.dev">naklios.dev</a>.
+  Abhyas — self-paced maths practice, a learning app for <a href="https://naklios.dev">naklios.dev</a>.
   Content from the <b>abhyas</b> knowledge-graph engine. No account, no tracking — your progress stays on this device.
 </footer>
 
 <div id="toast"></div>
 <div id="overlay"><div class="modal" id="modal"></div></div>
 
+<!-- naklios cooperative SDK (vendored, same-origin). No-op when standalone. -->
+<script src="sdk/naklios.js"></script>
 <script src="data/maths-k5.js"></script>
 <script>
 "use strict";
@@ -278,6 +328,7 @@ kbd{background:var(--panel);border:1px solid var(--line-strong);border-bottom-wi
   const DATA = window.ABHYAS_DATA;
   const $ = (s,r=document)=>r.querySelector(s);
   const app = $("#app");
+  const NAK = (typeof window.naklios === "object" && window.naklios) ? window.naklios : null;
 
   if(!DATA || !Array.isArray(DATA.concepts) || !DATA.concepts.length){
     app.innerHTML = `<div class="empty"><div class="big">😕</div>Couldn't load the maths content.<br>Make sure <code>data/maths-k5.js</code> is present next to this page.</div>`;
@@ -292,35 +343,56 @@ kbd{background:var(--panel);border:1px solid var(--line-strong);border-bottom-wi
   DATA.drills.forEach(d=>{ (drillsByConcept[d.concept_id] ||= []).push(d); });
   DATA.mcqs.forEach(m=>{ (mcqsByConcept[m.concept_id] ||= []).push(m); });
 
-  // strands in first-seen order
   const strandOrder = [];
   const strandConcepts = {};
   concepts.forEach(c=>{
     if(!strandConcepts[c.strand]){ strandConcepts[c.strand]=[]; strandOrder.push(c.strand); }
     strandConcepts[c.strand].push(c);
   });
-  // stable soft colour per strand (calm pastels)
   const strandColor = {};
   strandOrder.forEach((s,i)=>{
     const h = Math.round((i*360/strandOrder.length + 18) % 360);
     strandColor[s] = { bg:`hsl(${h} 52% 92%)`, fg:`hsl(${h} 46% 32%)`, bar:`hsl(${h} 55% 55%)` };
   });
 
-  /* ---------- progress (localStorage) ---------- */
+  /* ---------- progress store (host fs when hosted, else localStorage) ---------- */
   const PKEY = "abhyas.progress.v1";
   const GKEY = "abhyas.grade.v1";
+  let backend = "local"; // 'local' | 'host'
   let progress = {};
   try { progress = JSON.parse(localStorage.getItem(PKEY)) || {}; } catch(e){ progress = {}; }
-  function saveProgress(){ try{ localStorage.setItem(PKEY, JSON.stringify(progress)); }catch(e){} }
+
+  let saveT;
+  function persist(){ clearTimeout(saveT); saveT = setTimeout(doSave, 250); }
+  async function doSave(){
+    const json = JSON.stringify(progress);
+    if(backend === "host" && NAK){
+      try { await NAK.fs.write("progress.json", json); return; } catch(e){ /* fall through to local */ }
+    }
+    try { localStorage.setItem(PKEY, json); } catch(e){}
+  }
+  async function adoptHostStore(){
+    if(!NAK || backend === "host") return;
+    let hostData = {};
+    try {
+      if(await NAK.fs.exists("progress.json")){
+        hostData = JSON.parse(await NAK.fs.read("progress.json")) || {};
+      }
+    } catch(e){ return; } // storage not really available; stay local
+    backend = "host";
+    if(Object.keys(hostData).length){ progress = hostData; }        // host is the sovereign copy
+    else if(Object.keys(progress).length){ persist(); }             // seed empty host with what we have
+    render();
+  }
+
   function prog(cid){ return progress[cid] || (progress[cid]={d_seen:0,d_ok:0,m_seen:0,m_ok:0,miscon:{}}); }
-  function bumpDrill(cid,ok){ const p=prog(cid); p.d_seen++; if(ok)p.d_ok++; saveProgress(); }
-  function bumpMcq(cid,ok,misc){ const p=prog(cid); p.m_seen++; if(ok)p.m_ok++; else if(misc){ p.miscon[misc]=(p.miscon[misc]||0)+1; } saveProgress(); }
-  // mastery 0..1 — weighted toward diagnostic MCQs, needs some volume
+  function bumpDrill(cid,ok){ const p=prog(cid); p.d_seen++; if(ok)p.d_ok++; persist(); }
+  function bumpMcq(cid,ok,misc){ const p=prog(cid); p.m_seen++; if(ok)p.m_ok++; else if(misc){ p.miscon[misc]=(p.miscon[misc]||0)+1; } persist(); }
   function mastery(cid){
     const p=progress[cid]; if(!p) return 0;
     const dRate = p.d_seen? p.d_ok/p.d_seen : 0;
     const mRate = p.m_seen? p.m_ok/p.m_seen : 0;
-    const vol = Math.min(1,(p.d_seen+p.m_seen*2)/16); // ramp up with practice volume
+    const vol = Math.min(1,(p.d_seen+p.m_seen*2)/16);
     const acc = p.m_seen? (mRate*0.6+dRate*0.4) : dRate;
     return acc*vol;
   }
@@ -332,30 +404,33 @@ kbd{background:var(--panel);border:1px solid var(--line-strong);border-bottom-wi
   function esc(s){ return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
   function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
   function conceptsInGrade(list){ return grade==="all"? list : list.filter(c=>String(c.grade)===String(grade)); }
+  function masteryColor(pct){ return pct>=0.75?'var(--ok)':pct>=0.35?'var(--brand)':'var(--line-strong)'; }
   function ring(pct,size=42){
     const r=(size-6)/2, c=2*Math.PI*r, off=c*(1-pct);
-    const col = pct>=0.75?'var(--ok)':pct>=0.35?'var(--brand)':'var(--line-strong)';
     return `<svg class="ring" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
       <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--line)" stroke-width="5"/>
-      <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${col}" stroke-width="5" stroke-linecap="round"
+      <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${masteryColor(pct)}" stroke-width="5" stroke-linecap="round"
         stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" transform="rotate(-90 ${size/2} ${size/2})"/>
       <text x="50%" y="52%" dominant-baseline="middle" text-anchor="middle" font-size="11" font-weight="700" fill="var(--muted)">${Math.round(pct*100)}</text>
     </svg>`;
   }
   function diffLabel(d){ return ["","easy","easy","medium","hard","hard"][d]||"medium"; }
+  function fmtTime(ms){ const s=Math.round(ms/1000); const m=Math.floor(s/60); return `${m}:${String(s%60).padStart(2,"0")}`; }
 
   /* ---------- toast + modal ---------- */
   let toastT;
   function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove("show"),2200); }
-  function modal({title,body,confirmLabel="OK",cancelLabel=null,danger=false,onConfirm}){
+  function modal({title,body,confirmLabel="OK",cancelLabel=null,danger=false,onConfirm,extra=null}){
     const ov=$("#overlay"), m=$("#modal");
     m.innerHTML=`<h3>${esc(title)}</h3><p>${body}</p><div class="row">
+      ${extra||""}
       ${cancelLabel?`<button class="btn ghost" data-x="cancel">${esc(cancelLabel)}</button>`:""}
-      <button class="btn${danger?"":" "}" data-x="ok" ${danger?'style="background:var(--bad)"':''}>${esc(confirmLabel)}</button></div>`;
+      <button class="btn" data-x="ok" ${danger?'style="background:var(--bad)"':''}>${esc(confirmLabel)}</button></div>`;
     ov.classList.add("show");
     const close=()=>ov.classList.remove("show");
     m.querySelector('[data-x="ok"]').onclick=()=>{ close(); onConfirm&&onConfirm(); };
     const c=m.querySelector('[data-x="cancel"]'); if(c) c.onclick=close;
+    const cl=m.querySelector('[data-x="close-app"]'); if(cl && NAK) cl.onclick=()=>{ close(); NAK.close(); };
     ov.onclick=e=>{ if(e.target===ov) close(); };
   }
 
@@ -389,7 +464,7 @@ kbd{background:var(--panel);border:1px solid var(--line-strong);border-bottom-wi
       return {ok: (eYes&&yes.includes(u))||(!eYes&&no.includes(u)), expected};
     }
     if(at==="fraction"){
-      const av = drill.answer_value; // [num,den]
+      const av = drill.answer_value;
       const uf = user.match(/^\s*(-?\d+)\s*\/\s*(-?\d+)\s*$/);
       if(uf){
         const un=+uf[1],ud=+uf[2];
@@ -397,12 +472,10 @@ kbd{background:var(--panel);border:1px solid var(--line-strong);border-bottom-wi
         const ef=String(expected).match(/(-?\d+)\s*\/\s*(-?\d+)/);
         if(ef&&ud!==0) return {ok: un*(+ef[2])===(+ef[1])*ud, expected};
       }
-      // whole-number answer stored as fraction, or vice versa
       const un=nums(user), en=nums(expected);
       if(un.length===1&&en.length===1) return {ok:Math.abs(un[0]-en[0])<1e-9,expected};
       return {ok:false,expected};
     }
-    // compound / area / length: forgiving — numbers must match in order, letters must match if given
     const un=nums(user), en=nums(expected);
     const numsEq = un.length===en.length && un.every((v,i)=>Math.abs(v-en[i])<1e-9);
     const ul=lettersOnly(user), el=lettersOnly(expected);
@@ -411,9 +484,19 @@ kbd{background:var(--panel);border:1px solid var(--line-strong);border-bottom-wi
 
   /* ---------- navigation state ---------- */
   const state = { view:"home", strand:null, cid:null };
-  function nav(view, opts={}){ Object.assign(state,{view,strand:null,cid:null},opts); render(); window.scrollTo({top:0,behavior:"instant"}); }
+  function nav(view, opts={}){
+    stopMockTimer();
+    Object.assign(state,{view,strand:null,cid:null},opts);
+    render();
+    window.scrollTo({top:0,behavior:"instant"});
+  }
 
-  /* ---------- renders ---------- */
+  /* ---------- shared UI bits ---------- */
+  const TOP_VIEWS = ["home","mock","dashboard"];
+  function tabsBar(active){
+    const t=[["home","Practice"],["mock","Mock test"],["dashboard","Progress"]];
+    return `<div class="tabs">${t.map(([v,l])=>`<button class="tab${v===active?" on":""}" data-nav="${v}">${l}</button>`).join("")}</div>`;
+  }
   function gradeBar(){
     const pills = ["all",1,2,3,4,5].map(g=>{
       const lbl = g==="all"?"All classes":"Class "+g;
@@ -421,15 +504,18 @@ kbd{background:var(--panel);border:1px solid var(--line-strong);border-bottom-wi
     }).join("");
     return `<div class="gradebar"><span class="lbl">Show:</span>${pills}</div>`;
   }
+  function emptyBlock(msg){ return `<div class="empty"><div class="big">🍃</div>${esc(msg)}</div>`; }
 
+  /* ---------- render dispatch ---------- */
   function render(){
-    if(state.view==="home") return renderHome();
-    if(state.view==="strand") return renderStrand();
-    if(state.view==="concept") return renderConcept();
-    if(state.view==="drill") return renderDrill();
-    if(state.view==="mcq") return renderMcq();
+    const map = { home:renderHome, strand:renderStrand, concept:renderConcept, drill:renderDrill,
+                  mcq:renderMcq, mock:renderMockSetup, mockrun:renderMockRun, mockresults:renderMockResults,
+                  dashboard:renderDashboard };
+    (map[state.view]||renderHome)();
+    setHostTitle();
   }
 
+  /* ---------- home (practice / browse) ---------- */
   function renderHome(){
     const totalConcepts = conceptsInGrade(concepts).length;
     let masteredCount=0, practiced=0;
@@ -451,6 +537,7 @@ kbd{background:var(--panel);border:1px solid var(--line-strong);border-bottom-wi
       </button>`;
     }).join("");
     app.innerHTML = `
+      ${tabsBar("home")}
       ${gradeBar()}
       <div class="hero">
         <h1>Practise maths, one concept at a time</h1>
@@ -555,7 +642,7 @@ kbd{background:var(--panel);border:1px solid var(--line-strong);border-bottom-wi
     renderDrill();
   }
   function renderDrill(){
-    const c=conceptById[drillS.cid], col=strandColor[c.strand], d=drillS.cur, fb=drillS.fb;
+    const c=conceptById[drillS.cid], d=drillS.cur, fb=drillS.fb;
     const pctBig = /^[\d\s.+\-×x*/=?()]+$/.test(d.stem) && d.stem.length<28;
     app.innerHTML = `
       <div class="runner">
@@ -576,7 +663,7 @@ kbd{background:var(--panel);border:1px solid var(--line-strong);border-bottom-wi
               ? `<button class="btn" id="drillNext">Next →</button>`
               : `<button class="btn" id="drillCheck">Check</button>`}
           </div>
-          ${fb?feedbackHtml(fb, c):''}
+          ${fb?feedbackHtml(fb):''}
         </div>
         <div style="text-align:center;margin-top:16px;color:var(--faint);font-size:13px">Type your answer, then press <kbd>Enter</kbd>.</div>
       </div>`;
@@ -584,7 +671,7 @@ kbd{background:var(--panel);border:1px solid var(--line-strong);border-bottom-wi
     if(!fb && inp) inp.focus();
     if(fb){ const nb=$("#drillNext"); if(nb) nb.focus(); }
   }
-  function feedbackHtml(fb,c){
+  function feedbackHtml(fb){
     if(fb.ok) return `<div class="fb ok"><span class="ic">✓</span><div><div class="t">Nice — that's right.</div></div></div>`;
     return `<div class="fb bad"><span class="ic">✗</span><div>
       <div class="t">Not quite.</div>
@@ -602,7 +689,7 @@ kbd{background:var(--panel);border:1px solid var(--line-strong);border-bottom-wi
     renderDrill();
   }
 
-  /* ---------- mcq runner ---------- */
+  /* ---------- concept MCQ quiz runner (immediate feedback) ---------- */
   let mcqS=null;
   function startMcq(cid){
     const pool=mcqsByConcept[cid]||[];
@@ -639,7 +726,6 @@ kbd{background:var(--panel);border:1px solid var(--line-strong);border-bottom-wi
         <div class="expl"><b>Idea:</b> ${esc(q.explanation||("The answer is "+q.options[q.answer_index]+"."))}</div>
       </div></div>`;
     }
-    const score = mcqS.log.filter(x=>x.ok).length;
     app.innerHTML=`
       <div class="runner">
         <div class="runner-top">
@@ -674,13 +760,7 @@ kbd{background:var(--panel);border:1px solid var(--line-strong);border-bottom-wi
     const total=mcqS.set.length, score=mcqS.log.filter(x=>x.ok).length;
     const pct=score/total;
     const cap = pct===1?"Perfect — every one right.":pct>=0.7?"Well done.":pct>=0.4?"Getting there — review the misses below.":"Keep practising — the ideas below are the ones to fix.";
-    const misses = mcqS.log.filter(x=>!x.ok).map(x=>`
-      <div class="miss">
-        <div class="q">${esc(x.q.stem)}</div>
-        <div class="row">You chose <b>${esc(x.q.options[x.chosen])}</b> · answer is <b>${esc(x.q.options[x.q.answer_index])}</b></div>
-        ${x.misc?`<div class="mc">${esc(x.misc)}</div>`:""}
-        <div class="row">${esc(x.q.explanation||"")}</div>
-      </div>`).join("");
+    const misses = missReview(mcqS.log.filter(x=>!x.ok));
     app.innerHTML=`
       <div class="runner">
         <div class="crumbs"><button data-nav="home">Home</button><span class="sep">›</span><button data-cid="${c.id}">${esc(c.concept)}</button><span class="sep">›</span><span style="color:var(--ink);font-weight:600">Results</span></div>
@@ -696,45 +776,318 @@ kbd{background:var(--panel);border:1px solid var(--line-strong);border-bottom-wi
         </div>
       </div>`;
   }
+  function missReview(list){
+    return list.map(x=>`
+      <div class="miss">
+        <div class="q">${esc(x.q.stem)}</div>
+        <div class="row">You chose <b>${esc(x.q.options[x.chosen]!=null?x.q.options[x.chosen]:"— (skipped)")}</b> · answer is <b>${esc(x.q.options[x.q.answer_index])}</b></div>
+        ${x.misc?`<div class="mc">${esc(x.misc)}</div>`:""}
+        <div class="row">${esc(x.q.explanation||"")}</div>
+      </div>`).join("");
+  }
 
-  function emptyBlock(msg){ return `<div class="empty"><div class="big">🍃</div>${esc(msg)}</div>`; }
+  /* ---------- MOCK TEST ---------- */
+  // config uses Sets of selected grades/strands
+  const mockCfg = { grades:new Set(), strands:new Set(), diff:"any", length:15 };
+  function mockPool(){
+    return DATA.mcqs.filter(q=>{
+      if(mockCfg.grades.size && !mockCfg.grades.has(String(q.grade))) return false;
+      if(mockCfg.strands.size && !mockCfg.strands.has(q.strand)) return false;
+      if(mockCfg.diff==="easy" && !(q.difficulty<=2)) return false;
+      if(mockCfg.diff==="medium" && q.difficulty!==3) return false;
+      if(mockCfg.diff==="hard" && !(q.difficulty>=4)) return false;
+      return true;
+    });
+  }
+  function renderMockSetup(){
+    const gradeChecks = [1,2,3,4,5].map(g=>`<button class="check${mockCfg.grades.has(String(g))?" on":""}" data-mgrade="${g}">Class ${g}</button>`).join("");
+    const strandChecks = strandOrder.map(s=>`<button class="check${mockCfg.strands.has(s)?" on":""}" data-mstrand="${esc(s)}">${esc(s)}</button>`).join("");
+    const diffChecks = [["any","Any"],["easy","Easy"],["medium","Medium"],["hard","Hard"]].map(([v,l])=>`<button class="check${mockCfg.diff===v?" on":""}" data-mdiff="${v}">${l}</button>`).join("");
+    const lenChecks = [10,15,20,30].map(n=>`<button class="check${mockCfg.length===n?" on":""}" data-mlen="${n}">${n}</button>`).join("");
+    const avail = mockPool().length;
+    const willBe = Math.min(mockCfg.length, avail);
+    app.innerHTML = `
+      ${tabsBar("mock")}
+      <div class="hero"><h1>Build a mock test</h1><p>Mix questions across topics and classes, answer them test-style, then get a scored report that names <b>which misconceptions</b> tripped you up.</p></div>
+      <div class="form-card">
+        <div class="field"><label>Classes <span class="hint">none = all classes</span></label><div class="checks">${gradeChecks}</div></div>
+        <div class="field"><label>Topics <span class="hint">none = all topics</span></label><div class="checks">${strandChecks}</div></div>
+        <div class="field"><label>Difficulty</label><div class="checks">${diffChecks}</div></div>
+        <div class="field"><label>How many questions</label><div class="checks">${lenChecks}</div></div>
+        <div class="avail">${avail} question${avail!==1?"s":""} match — your test will have <b>${willBe}</b>.</div>
+        <button class="btn wide" data-mockstart="1" ${avail?"":"disabled"} style="margin-top:8px">Start mock test →</button>
+      </div>
+    `;
+  }
+
+  let mockS=null, mockTimerId=null;
+  function stopMockTimer(){ if(mockTimerId){ clearInterval(mockTimerId); mockTimerId=null; } }
+  function startMock(){
+    const pool = mockPool();
+    if(!pool.length){ toast("No questions match — widen the selection."); return; }
+    const set = shuffle(pool).slice(0, Math.min(mockCfg.length, pool.length));
+    mockS = { set, i:0, sel:null, answers:new Array(set.length).fill(null), start:Date.now() };
+    state.view="mockrun";
+    stopMockTimer();
+    mockTimerId = setInterval(()=>{ const el=$("#mockTimer"); if(el) el.textContent=fmtTime(Date.now()-mockS.start); }, 1000);
+    renderMockRun();
+  }
+  function renderMockRun(){
+    const q=mockS.set[mockS.i], sel=mockS.sel;
+    const opts=q.options.map((o,idx)=>{
+      const key=String.fromCharCode(65+idx);
+      return `<button class="opt${sel===idx?" sel":""}" data-mopt="${idx}"><span class="key">${key}</span><span>${esc(o)}</span></button>`;
+    }).join("");
+    const last = mockS.i+1>=mockS.set.length;
+    app.innerHTML=`
+      <div class="runner">
+        <div class="runner-top">
+          <div class="who">Mock test<small>${mockCfg.strands.size?mockCfg.strands.size+" topic(s)":"all topics"} · ${mockCfg.grades.size?"Class "+[...mockCfg.grades].sort().join("/"):"all classes"}</small></div>
+          <div style="display:flex;gap:10px;align-items:center">
+            <span class="scoreline tnum">Q ${mockS.i+1} / ${mockS.set.length}</span>
+            <span class="scoreline tnum" id="mockTimer">${fmtTime(Date.now()-mockS.start)}</span>
+            <button class="btn ghost" id="mockQuit" style="padding:8px 14px;font-size:14px">Quit</button>
+          </div>
+        </div>
+        <div class="qcard">
+          <div class="qmeta"><span>${esc(q.strand)}</span><span>Class ${q.grade}</span></div>
+          <div class="stem">${esc(q.stem)}</div>
+          <div class="opts">${opts}</div>
+          <div style="display:flex;gap:10px;margin-top:20px">
+            <button class="btn ghost" id="mockSkip" style="flex:none">Skip</button>
+            <button class="btn wide" id="mockNext" ${sel===null?"disabled":""}>${last?"Finish test →":"Next →"}</button>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:14px;color:var(--faint);font-size:13px">Answers are graded at the end.</div>
+      </div>`;
+  }
+  function selectMock(idx){ mockS.sel=idx; renderMockRun(); }
+  function advanceMock(skip){
+    mockS.answers[mockS.i] = skip? null : mockS.sel;
+    mockS.i++; mockS.sel=null;
+    if(mockS.i>=mockS.set.length) finishMock();
+    else renderMockRun();
+  }
+  function finishMock(){
+    stopMockTimer();
+    mockS.elapsed = Date.now()-mockS.start;
+    // score + record into progress
+    const log=[];
+    mockS.set.forEach((q,i)=>{
+      const chosen=mockS.answers[i];
+      const ok = chosen===q.answer_index;
+      const dd = chosen==null?null:(q.distractors||[]).find(x=>x.option_index===chosen);
+      const misc = ok?null:(dd?dd.misconception:null);
+      bumpMcq(q.concept_id, ok, misc);
+      log.push({q, chosen, ok, misc});
+    });
+    mockS.log=log;
+    state.view="mockresults";
+    renderMockResults();
+  }
+  function renderMockResults(){
+    const log=mockS.log, total=log.length, score=log.filter(x=>x.ok).length;
+    const pct=score/total;
+    const answered=log.filter(x=>x.chosen!=null).length;
+    // per-strand breakdown
+    const byStrand={};
+    log.forEach(x=>{ const s=x.q.strand; (byStrand[s]||=(byStrand[s]={ok:0,n:0}), byStrand[s]).n++; if(x.ok)byStrand[s].ok++; });
+    const strandRows=Object.entries(byStrand).sort((a,b)=>b[1].n-a[1].n).map(([s,v])=>{
+      const p=v.ok/v.n, col=masteryColor(p);
+      return `<div class="mrow"><div class="name">${esc(s)}</div>
+        <div class="mbar"><i style="width:${Math.round(p*100)}%;background:${col}"></i></div>
+        <div class="pct tnum">${v.ok}/${v.n}</div></div>`;
+    }).join("");
+    // misconception aggregate
+    const miscCount={};
+    log.filter(x=>!x.ok&&x.misc).forEach(x=>{ miscCount[x.misc]=(miscCount[x.misc]||0)+1; });
+    const miscRows=Object.entries(miscCount).sort((a,b)=>b[1]-a[1]).map(([m,n])=>`
+      <div class="mc-agg"><div class="txt">${esc(m)}</div><div class="meta">seen ${n} time${n>1?"s":""} in this test</div></div>`).join("");
+    const misses = missReview(log.filter(x=>!x.ok));
+    const cap = pct===1?"Perfect run.":pct>=0.7?"Strong — a few ideas to firm up.":pct>=0.4?"A solid start. Focus on the misconceptions below.":"Plenty to build on — the ideas below are where to start.";
+    app.innerHTML=`
+      <div class="runner">
+        <div class="crumbs"><button data-nav="mock">Mock test</button><span class="sep">›</span><span style="color:var(--ink);font-weight:600">Report</span></div>
+        <div class="result-card">
+          <div class="score-big tnum" style="color:${pct>=0.7?'var(--ok)':pct>=0.4?'var(--brand)':'var(--bad)'}">${score}<span style="color:var(--faint);font-size:26px">/${total}</span></div>
+          <div class="score-cap">${cap}</div>
+          <div class="summary-grid">
+            <div class="box"><div class="n tnum">${Math.round(pct*100)}%</div><div class="l">Score</div></div>
+            <div class="box"><div class="n tnum">${answered}/${total}</div><div class="l">Answered</div></div>
+            <div class="box"><div class="n tnum">${fmtTime(mockS.elapsed)}</div><div class="l">Time taken</div></div>
+            <div class="box"><div class="n tnum">${Object.keys(miscCount).length}</div><div class="l">Misconceptions</div></div>
+          </div>
+        </div>
+        <div class="section-h">By topic</div>
+        <div class="panel">${strandRows}</div>
+        ${miscRows?`<div class="section-h">Misconceptions to fix</div>${miscRows}`:""}
+        ${misses?`<div class="section-h">Question review</div><div class="miss-list">${misses}</div>`:`<div class="section-h">Question review</div><div class="panel" style="padding:16px 18px;color:var(--muted)">Every question correct — nothing to review.</div>`}
+        <div class="result-actions">
+          <button class="btn" data-nav="mock">New test</button>
+          <button class="btn ghost" data-nav="dashboard">See progress</button>
+          <button class="btn ghost" data-nav="home">Back to topics</button>
+        </div>
+      </div>`;
+  }
+
+  /* ---------- MASTERY DASHBOARD ---------- */
+  function renderDashboard(){
+    const list = conceptsInGrade(concepts);
+    const started = list.filter(c=>progress[c.id]).length;
+    const mastered = list.filter(c=>mastery(c.id)>=0.75).length;
+    let ansTot=0, ansOk=0;
+    list.forEach(c=>{ const p=progress[c.id]; if(p){ ansTot+=p.d_seen+p.m_seen; ansOk+=p.d_ok+p.m_ok; } });
+    const acc = ansTot? Math.round(ansOk/ansTot*100) : 0;
+
+    // per-strand mastery
+    const strandRows = strandOrder.map(s=>{
+      const cs = conceptsInGrade(strandConcepts[s]);
+      if(!cs.length) return "";
+      const avg = cs.reduce((a,c)=>a+mastery(c.id),0)/cs.length;
+      const mstd = cs.filter(c=>mastery(c.id)>=0.75).length;
+      return `<div class="mrow"><div class="name">${esc(s)}<small>${mstd}/${cs.length} concept${cs.length>1?"s":""} mastered</small></div>
+        <div class="mbar"><i style="width:${Math.round(avg*100)}%;background:${masteryColor(avg)}"></i></div>
+        <div class="pct tnum">${Math.round(avg*100)}</div></div>`;
+    }).join("");
+
+    // concepts to review: started but not mastered, weakest first
+    const review = list.filter(c=>progress[c.id] && mastery(c.id)<0.75)
+      .sort((a,b)=>mastery(a.id)-mastery(b.id)).slice(0,8)
+      .map(c=>{
+        const p=progress[c.id];
+        return `<div class="review-row">
+          ${ring(mastery(c.id),40)}
+          <div class="name">${esc(c.concept)}<small>${esc(c.strand)} · ${(p.d_ok+p.m_ok)}/${(p.d_seen+p.m_seen)} correct</small></div>
+          <button class="btn ghost" data-cid="${c.id}" style="padding:8px 14px;font-size:13px">Open</button>
+        </div>`;
+      }).join("");
+
+    // common misconceptions across concepts
+    const miscAgg={};
+    list.forEach(c=>{ const p=progress[c.id]; if(p&&p.miscon){ for(const [m,n] of Object.entries(p.miscon)){ (miscAgg[m]||=(miscAgg[m]={n:0,cids:new Set()}), miscAgg[m]).n+=n; miscAgg[m].cids.add(c.id); } } });
+    const miscRows=Object.entries(miscAgg).sort((a,b)=>b[1].n-a[1].n).slice(0,8).map(([m,v])=>{
+      const cid=[...v.cids][0], c=conceptById[cid];
+      return `<div class="mc-agg"><div class="txt">${esc(m)}</div>
+        <div class="meta">hit ${v.n} time${v.n>1?"s":""} · <a data-cid="${cid}">${esc(c.concept)}</a>${v.cids.size>1?` +${v.cids.size-1} more`:""}</div></div>`;
+    }).join("");
+
+    const nothing = !started;
+    app.innerHTML=`
+      ${tabsBar("dashboard")}
+      ${gradeBar()}
+      <div class="hero"><h1>Your progress</h1><p>Mastery grows as you practise and quiz. Everything here is worked out on this device from what you've done.</p></div>
+      ${nothing? emptyBlock("Nothing yet — do a few drills or a quiz and your progress shows up here.") : `
+      <div class="stat-grid">
+        <div class="stat"><div class="n tnum">${started}</div><div class="l">Concepts started</div></div>
+        <div class="stat"><div class="n tnum">${mastered}</div><div class="l">Concepts mastered</div></div>
+        <div class="stat"><div class="n tnum">${ansTot}</div><div class="l">Questions answered</div></div>
+        <div class="stat"><div class="n tnum">${acc}%</div><div class="l">Overall accuracy</div></div>
+      </div>
+      <div class="section-h">Mastery by topic</div>
+      <div class="panel">${strandRows||'<div style="padding:14px 0;color:var(--muted)">No topics for this class.</div>'}</div>
+      ${review?`<div class="section-h">Keep practising</div><div class="panel">${review}</div>`:""}
+      ${miscRows?`<div class="section-h">Common misconceptions</div>${miscRows}`:""}
+      `}
+    `;
+  }
 
   /* ---------- events ---------- */
   document.addEventListener("click", e=>{
-    const t=e.target.closest("[data-nav],[data-strand],[data-cid],[data-drill],[data-mcq],[data-opt],[data-grade]");
+    const t=e.target.closest("[data-nav],[data-strand],[data-cid],[data-drill],[data-mcq],[data-opt],[data-grade],[data-mgrade],[data-mstrand],[data-mdiff],[data-mlen],[data-mockstart],[data-mopt]");
     if(!t){
-      if(e.target.id==="drillCheck") submitDrill();
-      else if(e.target.id==="drillNext") nextDrill(false);
-      else if(e.target.id==="mcqNext") nextMcq();
-      else if(e.target.closest("#drillCheck")) submitDrill();
-      else if(e.target.closest("#drillNext")) nextDrill(false);
-      else if(e.target.closest("#mcqNext")) nextMcq();
+      const id=e.target.id || e.target.closest("button")?.id;
+      if(id==="drillCheck") submitDrill();
+      else if(id==="drillNext") nextDrill(false);
+      else if(id==="mcqNext") nextMcq();
+      else if(id==="mockNext") advanceMock(false);
+      else if(id==="mockSkip") advanceMock(true);
+      else if(id==="mockQuit") nav("mock");
       return;
     }
-    if(t.dataset.grade!==undefined){ grade=t.dataset.grade; try{localStorage.setItem(GKEY,grade);}catch(_){}; render(); return; }
-    if(t.dataset.nav==="home"){ nav("home"); return; }
-    if(t.dataset.opt!==undefined){ if(mcqS && mcqS.chosen===null) answerMcq(+t.dataset.opt); return; }
-    if(t.dataset.drill){ startDrill(t.dataset.drill); return; }
-    if(t.dataset.mcq){ startMcq(t.dataset.mcq); return; }
-    if(t.dataset.cid){ nav("concept",{cid:t.dataset.cid}); return; }
-    if(t.dataset.strand){ nav("strand",{strand:t.dataset.strand}); return; }
+    const d=t.dataset;
+    if(d.grade!==undefined){ grade=d.grade; try{localStorage.setItem(GKEY,grade);}catch(_){}; render(); return; }
+    if(d.nav!==undefined){ nav(d.nav); return; }
+    if(d.opt!==undefined){ if(mcqS && mcqS.chosen===null) answerMcq(+d.opt); return; }
+    if(d.mopt!==undefined){ selectMock(+d.mopt); return; }
+    if(d.drill){ startDrill(d.drill); return; }
+    if(d.mcq){ startMcq(d.mcq); return; }
+    if(d.cid){ nav("concept",{cid:d.cid}); return; }
+    if(d.strand){ nav("strand",{strand:d.strand}); return; }
+    // mock setup toggles
+    if(d.mgrade!==undefined){ const g=d.mgrade; mockCfg.grades.has(g)?mockCfg.grades.delete(g):mockCfg.grades.add(g); renderMockSetup(); return; }
+    if(d.mstrand!==undefined){ const s=d.mstrand; mockCfg.strands.has(s)?mockCfg.strands.delete(s):mockCfg.strands.add(s); renderMockSetup(); return; }
+    if(d.mdiff!==undefined){ mockCfg.diff=d.mdiff; renderMockSetup(); return; }
+    if(d.mlen!==undefined){ mockCfg.length=+d.mlen; renderMockSetup(); return; }
+    if(d.mockstart!==undefined){ startMock(); return; }
   });
   document.addEventListener("keydown", e=>{
     if(e.key!=="Enter") return;
     if(state.view==="drill" && drillS){ if(drillS.fb) nextDrill(false); else submitDrill(); }
     else if(state.view==="mcq" && mcqS && mcqS.chosen!==null){ nextMcq(); }
+    else if(state.view==="mockrun" && mockS && mockS.sel!==null){ advanceMock(false); }
   });
   $("#menuBtn").addEventListener("click", ()=>{
+    const closeBtn = NAK ? `<button class="btn ghost" data-x="close-app">Close app</button>` : "";
+    const where = backend==="host"
+      ? `Abhyas is running inside NakliOS. Your progress is saved to your connected storage — nothing is sent anywhere else.`
+      : `Abhyas keeps your progress only in this browser, on this device — no account, no server, no tracking.`;
     modal({
       title:"Options",
-      body:`Abhyas keeps your progress only in this browser, on this device — no account, no server, no tracking.<br><br>Reset all your practice progress?`,
-      confirmLabel:"Reset progress", cancelLabel:"Cancel", danger:true,
-      onConfirm:()=>{ progress={}; saveProgress(); toast("Progress reset."); render(); }
+      body:`${where}<br><br>Reset all your practice progress?`,
+      confirmLabel:"Reset progress", cancelLabel:"Cancel", danger:true, extra:closeBtn,
+      onConfirm:()=>{ progress={}; persist(); toast("Progress reset."); render(); }
     });
   });
 
+  /* ---------- naklios host integration ---------- */
+  function applyHostTheme(t){
+    if(!t || !t.colors) return;
+    const c=t.colors, r=document.documentElement.style;
+    const set=(k,v)=>{ if(v) r.setProperty(k,v); };
+    set("--paper", c.BODY); set("--panel", c.PANEL); set("--card", c.PANEL);
+    set("--ink", c.INK); set("--brand", c.BRAND); set("--act", c.ACT); set("--ok", c.OK); set("--row", c.ROW);
+    if(c.BRAND && c.INK){ r.setProperty("--brand-ink", `color-mix(in srgb, ${c.BRAND} 76%, ${c.INK})`); }
+    if(c.BRAND && c.PANEL){ r.setProperty("--brand-soft", `color-mix(in srgb, ${c.BRAND} 22%, ${c.PANEL})`); }
+    if(c.OK && c.PANEL){ r.setProperty("--ok-soft", `color-mix(in srgb, ${c.OK} 20%, ${c.PANEL})`); }
+    if(c.OK && c.INK){ r.setProperty("--ok-ink", `color-mix(in srgb, ${c.OK} 66%, ${c.INK})`); }
+    if(c.INK && c.BODY){
+      r.setProperty("--muted", `color-mix(in srgb, ${c.INK} 62%, ${c.BODY})`);
+      r.setProperty("--faint", `color-mix(in srgb, ${c.INK} 42%, ${c.BODY})`);
+    }
+    if(c.INK){
+      r.setProperty("--line", `color-mix(in srgb, ${c.INK} 14%, transparent)`);
+      r.setProperty("--line-strong", `color-mix(in srgb, ${c.INK} 26%, transparent)`);
+    }
+  }
+  function updateHostChrome(caps){
+    const pill=$("#privPill");
+    if(caps.hosted && caps.fs){
+      const be=(caps.fsBackends||[]).find(b=>b.id===caps.fsBackend);
+      pill.innerHTML = `<span class="priv-dot"></span> Saved to your ${be?esc(be.label):"NakliOS storage"}`;
+    } else if(caps.hosted){
+      pill.innerHTML = `<span class="priv-dot"></span> Private · in NakliOS`;
+    }
+  }
+  const TITLES = { home:"Practice", strand:()=>state.strand, concept:()=>conceptById[state.cid]?.concept,
+    drill:"Drill", mcq:"Quiz", mock:"Mock test", mockrun:"Mock test", mockresults:"Mock report", dashboard:"Progress" };
+  function setHostTitle(){
+    if(!NAK) return;
+    let t=TITLES[state.view]; if(typeof t==="function") t=t();
+    try{ NAK.title("Abhyas" + (t?` — ${t}`:"")); }catch(_){}
+  }
+
   /* ---------- boot ---------- */
   render();
+  if(NAK){
+    try{
+      applyHostTheme(NAK.theme.current);
+      NAK.theme.onChange(applyHostTheme);
+      NAK.onCapabilitiesChange(caps=>{ updateHostChrome(caps); if(caps.hosted && caps.fs) adoptHostStore(); });
+      NAK.ready();
+      NAK.theme.request();
+      NAK.requestCapabilities();
+    }catch(e){ /* standalone-safe */ }
+  }
 })();
 </script>
 </body>
